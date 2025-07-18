@@ -37,7 +37,7 @@ const Minter = (props) => {
                 setRewardBalance(rewardBalance);
 
                 const mintedTokens = await getMintedTokens(address);
-                setMintedTokens(mintedTokens);
+                setMintedTokens(mintedTokens || []);
             }
         }
         initialize();
@@ -54,7 +54,7 @@ const Minter = (props) => {
                     const rewardBalance = await getRewardBalance(accounts[0]);
                     setRewardBalance(rewardBalance);
                     const mintedTokens = await getMintedTokens(accounts[0]);
-                    setMintedTokens(mintedTokens);
+                    setMintedTokens(mintedTokens || []);
                 } else {
                     setWallet("");
                     setStatus("🦊 Connect to Metamask using the top right button.");
@@ -87,7 +87,7 @@ const Minter = (props) => {
             const rewardBalance = await getRewardBalance(walletResponse.address);
             setRewardBalance(rewardBalance);
             const mintedTokens = await getMintedTokens(walletResponse.address);
-            setMintedTokens(mintedTokens);
+            setMintedTokens(mintedTokens || []);
         }
     };
 
@@ -99,7 +99,7 @@ const Minter = (props) => {
             const rewardBalance = await getRewardBalance(walletAddress);
             setRewardBalance(rewardBalance);
             const mintedTokens = await getMintedTokens(walletAddress);
-            setMintedTokens(mintedTokens);
+            setMintedTokens(mintedTokens || []);
         }
         setMinting(false);
     };
@@ -171,7 +171,7 @@ const Minter = (props) => {
 
             <h2>Minted Tokens </h2>
             <ul>
-                {mintedTokens.map((token, index) => (
+                {(mintedTokens || []).map((token, index) => (
                     <li key={index}>
                         <p>Token URI: {token.uri}</p> {/* You can customize this based on the structure of your tokens */}
                         <img src={token.image} width="250" height="250" alt="NFT" /> {/* Change size as needed */}
