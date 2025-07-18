@@ -1,5 +1,5 @@
-const Web3 = require('web3');
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "./config";
+const Web3 = require('web3');
 
 async function getMintedTokens(userAddress) {
     // Create a new web3 instance and connect to the blockchain

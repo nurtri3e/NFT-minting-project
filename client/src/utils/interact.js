@@ -1,7 +1,6 @@
 
 import getMintedTokens from "./getMintedTokens";
 import getRewardBalance from "./getRewardBalance";
-import getAccountBalance from "./getAccountBalance";
 import uploadToIPFS from './ipfs.js';
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "./config";
 
@@ -18,7 +17,7 @@ export const mintNFT = async (url, name, description) => {
         }
     }
     //make metadata
-    const metadata = new Object();
+    const metadata = {};
     metadata.name = name;
     metadata.image = url;
     metadata.description = description;
@@ -106,7 +105,7 @@ export const connectWallet = async () => {
                     <p>
                         {" "}
                         🦊{" "}
-                        <a target="_blank" href={`https://metamask.io/download.html`}>
+                        <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
                             You must install Metamask, a virtual Ethereum wallet, in your
                             browser.
                         </a>
@@ -149,7 +148,7 @@ export const getCurrentWalletConnected = async () => {
                     <p>
                         {" "}
                         🦊{" "}
-                        <a target="_blank" href={`https://metamask.io/download.html`}>
+                        <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
                             You must install Metamask, a virtual Ethereum wallet, in your
                             browser.
                         </a>

@@ -1,7 +1,6 @@
 //import { ur } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { connectWallet, getCurrentWalletConnected, mintNFT } from "./utils/interact";
-import Web3 from "web3";
 import getRewardBalance from "./utils/getRewardBalance";
 import getMintedTokens from "./utils/getMintedTokens";
 import getAccountBalance from "./utils/getAccountBalance";
@@ -69,7 +68,7 @@ const Minter = (props) => {
                 <p>
                     {" "}
                     🦊{" "}
-                    <a target="_blank" href={`https://metamask.io/download.html`}>
+                    <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
                         You must install Metamask, a virtual Ethereum wallet, in your
                         browser.
                     </a>
@@ -137,14 +136,14 @@ const Minter = (props) => {
                 <h2> 🚀 NFT Name: </h2>
                 <input
                     type="text"
-                    placeholder="e.g. NFT number #1!"
+                    placeholder="e.g. Pam Emmanuel Gyang"
                     onChange={(event) => setName(event.target.value)}
                 />
 
                 <h2> 🚀 NFT Description: </h2>
                 <input
                     type="text"
-                    placeholder="e.g. Type smt cool here ;)"
+                    placeholder="e.g B.Sc. Computer Science, Plasu Bokkos"
                     onChange={(event) => setDescription(event.target.value)}
                 />
 
@@ -175,7 +174,7 @@ const Minter = (props) => {
                 {mintedTokens.map((token, index) => (
                     <li key={index}>
                         <p>Token URI: {token.uri}</p> {/* You can customize this based on the structure of your tokens */}
-                        <img src={token.image} width="250" height="250" /> {/* Change size as needed */}
+                        <img src={token.image} width="250" height="250" alt="NFT" /> {/* Change size as needed */}
                     </li>
                 ))}
             </ul>
