@@ -16,7 +16,7 @@ contract MyNFT is ERC721URIStorage, Ownable {
     // Mapping to check if a token has already been minted
     mapping(string => bool) private tokenExists;
 
-    constructor() public ERC721("MyNFT", "NFT") {}
+    constructor() ERC721("MyNFT", "NFT") {}
 
     function mintNFT(address recipient, string memory tokenURI)
         public

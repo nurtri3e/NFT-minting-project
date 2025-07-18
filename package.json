@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "compile": "truffle compile",
+    "migrate": "truffle migrate --network development",
+    "test": "truffle test"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.6",
     "@openzeppelin/test-helpers": "^0.5.16",

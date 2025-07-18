@@ -3,14 +3,11 @@ import getMintedTokens from "./getMintedTokens";
 import getRewardBalance from "./getRewardBalance";
 import getAccountBalance from "./getAccountBalance";
 import uploadToIPFS from './ipfs.js';
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from "./config";
 
 const Web3 = require('web3');
 const web3 = new Web3(window.ethereum);
 
-const contractABI = require('../contract-abi.json')
-
-let contractAddress = '0x17f713aC25039abbfFc34354d3084FC2183b49d5';
-contractAddress = web3.utils.toChecksumAddress(contractAddress);
 
 export const mintNFT = async (url, name, description) => {
     //error handling
@@ -38,7 +35,7 @@ export const mintNFT = async (url, name, description) => {
     }
 
     //load smart contract
-    const contract = new web3.eth.Contract(contractABI, contractAddress);
+    const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 
     const address = window.ethereum.selectedAddress;
     const nonce = await web3.eth.getTransactionCount(address);
@@ -47,7 +44,7 @@ export const mintNFT = async (url, name, description) => {
 
     //set up your Ethereum transaction
     const transactionParameters = {
-        to: contractAddress, // Required except during contract publications.
+        to: CONTRACT_ADDRESS, // Required except during contract publications.
         from: address, // must match user's active address.
         'data': contract.methods.mintNFT(address, tokenURI).encodeABI(), //make call to NFT smart contract 
         nonce: nonce.toString()

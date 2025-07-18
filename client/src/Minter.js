@@ -30,31 +30,38 @@ const Minter = (props) => {
 
             addWalletListener();
 
-            // Fetch and update the account balance
-            const balance = await getAccountBalance(address);
-            setBalance(balance);
+            if (address) {
+                const balance = await getAccountBalance(address);
+                setBalance(balance);
 
-            const mintedTokens = await getMintedTokens(address);
-            setMintedTokens(mintedTokens)
+                const rewardBalance = await getRewardBalance(address);
+                setRewardBalance(rewardBalance);
+
+                const mintedTokens = await getMintedTokens(address);
+                setMintedTokens(mintedTokens);
+            }
         }
-
         initialize();
     }, []);
 
     function addWalletListener() {
         if (window.ethereum) {
-            window.ethereum.on("accountsChanged", (accounts) => {
+            window.ethereum.on("accountsChanged", async (accounts) => {
                 if (accounts.length > 0) {
                     setWallet(accounts[0]);
                     setStatus("👆🏽 Write a message in the text-field above.");
-                    // Fetch and update the account balance
-                    const balance = getAccountBalance(accounts[0]);
+                    const balance = await getAccountBalance(accounts[0]);
                     setBalance(balance);
-
+                    const rewardBalance = await getRewardBalance(accounts[0]);
+                    setRewardBalance(rewardBalance);
+                    const mintedTokens = await getMintedTokens(accounts[0]);
+                    setMintedTokens(mintedTokens);
                 } else {
                     setWallet("");
                     setStatus("🦊 Connect to Metamask using the top right button.");
                     setBalance("");
+                    setRewardBalance("");
+                    setMintedTokens([]);
                 }
             });
         } else {
@@ -71,42 +78,31 @@ const Minter = (props) => {
         }
     }
 
-
-    useEffect(async () => { //TODO: implement react hook
-        const { address, status } = await getCurrentWalletConnected();
-        setWallet(address);
-        setStatus(status);
-
-        addWalletListener();
-
-        // Fetch and update the account balance
-        const balance = await getAccountBalance(address);
-        setBalance(balance);
-
-        // Fetch and update the account balance
-        const rewardBalance = await getRewardBalance(address);
-        setRewardBalance(rewardBalance);
-
-    }, []);
-
-    const connectWalletPressed = async () => { //TODO: implement
+    const connectWalletPressed = async () => {
         const walletResponse = await connectWallet();
         setStatus(walletResponse.status);
         setWallet(walletResponse.address);
-
-        // Fetch and update the account balance
-        const balance = await getAccountBalance(walletResponse.address);
-        setBalance(balance);
-
+        if (walletResponse.address) {
+            const balance = await getAccountBalance(walletResponse.address);
+            setBalance(balance);
+            const rewardBalance = await getRewardBalance(walletResponse.address);
+            setRewardBalance(rewardBalance);
+            const mintedTokens = await getMintedTokens(walletResponse.address);
+            setMintedTokens(mintedTokens);
+        }
     };
 
-    const onMintPressed = async () => { //TODO: implement
-        setMinting(true); // Start loading at the beginning of the operation
+    const onMintPressed = async () => {
+        setMinting(true);
         const { status } = await mintNFT(url, name, description);
         setStatus(status);
-        setMinting(false); // End loading after the operation is performed
-        setRewardBalance(rewardBalance);
-        setMintedTokens(mintedTokens);
+        if (walletAddress) {
+            const rewardBalance = await getRewardBalance(walletAddress);
+            setRewardBalance(rewardBalance);
+            const mintedTokens = await getMintedTokens(walletAddress);
+            setMintedTokens(mintedTokens);
+        }
+        setMinting(false);
     };
 
     return (
