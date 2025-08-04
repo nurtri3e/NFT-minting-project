@@ -36,7 +36,7 @@ This tutorial will walk you through the process of designing a full-stack Non-Fu
 
 - Clone the repo to your local machine
 ```bash
-git clone https://github.com/lamnd09/nft-minting-tutorial.git
+git clone https://github.com/nurtri3e/NFT-minting-project
 cd nft-minting-tutorial
 ```
 - cd into the client directory

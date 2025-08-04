@@ -80,7 +80,7 @@ const Minter = (props) => {
     const connectWalletPressed = async () => {
         const walletResponse = await connectWallet();
         setStatus(walletResponse.status);
-        setWallet(walletResponse.address);
+        setWallet(walletResponse.address || "");
         if (walletResponse.address) {
             const balance = await getAccountBalance(walletResponse.address);
             setBalance(balance);
@@ -88,6 +88,10 @@ const Minter = (props) => {
             setRewardBalance(rewardBalance);
             const mintedTokens = await getMintedTokens(walletResponse.address);
             setMintedTokens(mintedTokens || []);
+        } else {
+            setBalance("");
+            setRewardBalance("");
+            setMintedTokens([]);
         }
     };
 

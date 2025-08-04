@@ -2,7 +2,11 @@
   "scripts": {
     "compile": "truffle compile",
     "migrate": "truffle migrate --network development",
-    "test": "truffle test"
+    "test": "truffle test",
+    "setup": "node setup.js",
+    "deploy": "node deploy.js",
+    "start-client": "cd client && npm start",
+    "install-client": "cd client && npm install"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.6",

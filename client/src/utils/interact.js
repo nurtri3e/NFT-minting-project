@@ -1,11 +1,15 @@
-
 import getMintedTokens from "./getMintedTokens";
 import getRewardBalance from "./getRewardBalance";
 import uploadToIPFS from './ipfs.js';
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "./config";
 
 const Web3 = require('web3');
-const web3 = new Web3(window.ethereum);
+let web3;
+if (typeof window !== "undefined" && window.ethereum) {
+    web3 = new Web3(window.ethereum);
+} else {
+    web3 = null;
+}
 
 
 export const mintNFT = async (url, name, description) => {
@@ -86,11 +90,10 @@ export const connectWallet = async () => {
             const addressArray = await window.ethereum.request({
                 method: "eth_requestAccounts",
             });
-            const obj = {
-                status: "👆🏽 Write a message in the text-field above.",
+            return {
+                status: "👆🏽 Wallet connected.",
                 address: addressArray[0],
             };
-            return obj;
         } catch (err) {
             return {
                 address: "",
@@ -100,18 +103,7 @@ export const connectWallet = async () => {
     } else {
         return {
             address: "",
-            status: (
-                <span>
-                    <p>
-                        {" "}
-                        🦊{" "}
-                        <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
-                            You must install Metamask, a virtual Ethereum wallet, in your
-                            browser.
-                        </a>
-                    </p>
-                </span>
-            ),
+            status: "🦊 You must install Metamask, a virtual Ethereum wallet, in your browser: https://metamask.io/download.html",
         };
     }
 };
@@ -143,18 +135,15 @@ export const getCurrentWalletConnected = async () => {
     } else {
         return {
             address: "",
-            status: (
-                <span>
-                    <p>
-                        {" "}
-                        🦊{" "}
-                        <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
-                            You must install Metamask, a virtual Ethereum wallet, in your
-                            browser.
-                        </a>
-                    </p>
-                </span>
-            ),
+            // Changed from JSX to plain string for status
+            status: "🦊 You must install Metamask, a virtual Ethereum wallet, in your browser: https://metamask.io/download.html",
         };
     }
 };
+
+// Suggestion: In your React component, listen for account/network changes like this:
+// if (window.ethereum) {
+//   window.ethereum.on('accountsChanged', () => { /* update UI */ });
+//   window.ethereum.on('chainChanged', () => { /* update UI */ });
+// }
+   
